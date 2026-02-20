@@ -1,0 +1,234 @@
+STUDY BOT
+AI-Powered Context-Aware Learning Assistant
+
+Developed Using:
+ FastAPI | MongoDB Atlas | LangChain | Groq LLM | Render Hosting
+Submitted By:
+ Harshitha B.G.
+Date:
+20-02-2026
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PROJECT OVERVIEW AND MEMORY IMPLEMENTATION
+
+1. Project Overview
+1.1 Introduction
+The Study Bot is an AI-powered chatbot designed to assist students with academic queries while maintaining contextual awareness across multiple interactions. Traditional chatbots process each request independently, without remembering previous conversations. In contrast, Study Bot implements persistent memory storage to provide coherent and personalized responses.
+The system is developed using:
+FastAPI for backend API development
+
+
+MongoDB Atlas for persistent chat memory
+
+
+LangChain for structured prompt management
+
+
+Groq LLM (openai/gpt-oss-20b) for AI response generation
+
+
+Render for hosting the deployed API
+
+
+The chatbot is deployed as a RESTful API, allowing seamless integration with web and mobile applications.
+
+
+
+
+1.2 Objectives
+The primary objectives of the Study Bot project are:
+To develop an AI-based academic assistant
+
+
+To implement contextual conversation handling
+
+
+To store and retrieve chat history using a cloud database
+
+
+To provide multi-session user-specific interactions
+
+
+To design a scalable and production-ready API system
+
+
+
+1.3 System Architecture Overview
+The system follows a structured workflow:
+The user sends a question through an API request.
+
+
+The FastAPI backend receives the request.
+
+
+The system retrieves previous chat history from MongoDB using the user ID.
+
+
+The retrieved history is injected into a structured prompt template.
+
+
+The prompt is sent to the Groq Large Language Model.
+
+
+The model generates a contextual response.
+
+
+Both the user query and the AI response are stored in MongoDB.
+
+
+The response is returned to the user.
+This architecture ensures contextual continuity and scalable deployment.
+
+
+2. Memory Implementation
+2.1 Need for Memory
+Large Language Models (LLMs) are stateless by default, meaning they do not remember previous interactions unless past conversation data is explicitly included in each request.
+To overcome this limitation, Study Bot implements a database-backed memory system. This allows the chatbot to:
+Maintain conversation continuity
+
+
+Provide relevant follow-up responses
+
+
+Support multi-session learning
+
+
+Personalize responses based on user history
+
+
+
+2.2 Types of Memory Used
+2.2.1 Short-Term Memory
+Short-term memory refers to recent conversation history retrieved before generating a response.
+The system retrieves the latest six messages for a specific user.
+
+
+Messages are sorted chronologically.
+
+
+These messages are injected into the prompt template.
+
+
+This ensures the model understands the immediate conversational context.
+
+
+
+2.2.2 Long-Term Memory
+Long-term memory is implemented using MongoDB Atlas.
+Every user message and assistant response is stored permanently.
+
+
+Conversations are associated with a unique user ID.
+
+
+Each message is timestamped for chronological retrieval.
+
+
+This allows the chatbot to remember previous interactions even after sessions end.
+
+2.3 Database Structure
+Database Name: Chat
+ Collection Name: users
+Each message is stored as a document containing:
+user_id – Identifies the user
+
+
+role – Specifies whether the message is from the user or assistant
+
+
+message – Stores the conversation text
+
+
+timestamp – Records the time of message creation
+
+
+This structure enables efficient filtering, sorting, and retrieval of user-specific conversation history.
+
+
+
+
+2.4 Memory Retrieval Process
+The memory retrieval function performs the following operations:
+Filters records using the provided user ID.
+
+
+Sorts messages by timestamp in chronological order.
+
+
+Limits results to the most recent messages.
+
+
+Formats them into role-message pairs.
+
+
+Injects them into the prompt template.
+
+
+This structured retrieval ensures relevant and coherent context injection before generating a response.
+
+2.5 Context Injection Mechanism
+The prompt template consists of:
+A system instruction defining chatbot behavior
+
+
+A placeholder for conversation history
+
+
+The current user question
+
+
+When a new query is received:
+Previous messages are fetched from MongoDB.
+
+
+These messages are inserted into the history placeholder.
+
+
+The complete structured prompt is sent to the LLM.
+
+
+This allows the model to generate responses that reference earlier discussions, making the chatbot context-aware.
+
+2.6 Example Scenario
+First Interaction:
+ User: Explain Newton’s Laws
+ Bot: Provides explanation and stores it in the database.
+Second Interaction:
+ User: Give a real-life example of the second law.
+System Process:
+Retrieves previous discussion about Newton’s Laws.
+
+
+Injects it into the prompt.
+
+
+Generates a relevant example response.
+
+
+This demonstrates how memory enables continuous and meaningful conversations.
+
+3. Conclusion
+The Study Bot integrates AI response generation with persistent memory to create a context-aware academic assistant. By combining FastAPI, MongoDB Atlas, LangChain, Groq LLM, and Render hosting, the system supports:
+
+
+Structured prompt handling
+
+
+Scalable API deployment
+
+
+The memory architecture ensures continuity, efficient storage, and personalized learning support.
+
+
